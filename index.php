@@ -12,9 +12,8 @@ if (isset($_POST["add"]) && strlen(trim($_POST["userName"])) > 0) {
 }
 $stmtAll = $dbh->query("SELECT name,army FROM members");
 $userList = $stmtAll->fetchAll();
-foreach ($userList as $row) {
-    echo $row["name"]." - ".$row["army"];
-}
+
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -43,21 +42,16 @@ foreach ($userList as $row) {
         <h3>Список участников</h3>
         <form action="index.php" method="post">
             <?php
+            foreach ($userList as $row) {
+                echo "<div class='form-check'>";
+                echo "<input class='form-check-input' type='radio' name='membersList' id='".$row["name"]."' value='".$row["name"]."'>";
+                echo "<label class='form-check-label' for='".$row["name"]."'>";
+                echo $row["name"]."<>".$row["army"];
+                echo "</label>";
+                echo "</div>";
+            }
             ?>
-
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-                <label class="form-check-label" for="exampleRadios1">
-                    Иван-Некроны
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-                <label class="form-check-label" for="exampleRadios2">
-                    Сергей - Имперская гвардия
-                </label>
-            </div>
-            <button type="submit" class="btn btn-danger mb-3">Удалить</button>
+            <button name="delete" type="submit" class="btn btn-danger mb-3">Удалить</button>
         </form>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
